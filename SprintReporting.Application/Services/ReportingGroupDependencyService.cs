@@ -7,8 +7,18 @@ namespace SprintReporting.Application.Services;
 public class ReportingGroupDependencyService : IReportingGroupDependencyService
 {
     public ReportConfiguration BuildConfiguration(
-        IReadOnlyList<ReportGroupType> selectedGroups)
+        IReadOnlyList<ReportGroupType> selectedGroups,
+        bool includeAllGroups = false)
     {
+        // "All" selection: include every report group in its canonical order.
+        if (includeAllGroups)
+        {
+            return new ReportConfiguration
+            {
+                SelectedGroups = Enum.GetValues<ReportGroupType>().ToList()
+            };
+        }
+
         var normalizedGroups = selectedGroups
             .Where(group => Enum.IsDefined(typeof(ReportGroupType), group))
             .Distinct()
