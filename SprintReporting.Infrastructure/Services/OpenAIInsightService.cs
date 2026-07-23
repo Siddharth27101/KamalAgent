@@ -129,10 +129,6 @@ public class OpenAIInsightService : IAIInsightService
     {
         var compactPayload = new
         {
-            selectedGroups = configuration.SelectedGroups
-                .Select(group => group.ToString())
-                .ToList(),
-
             metrics.TotalIssues,
             metrics.CompletedIssues,
             metrics.OpenIssues,
@@ -140,14 +136,25 @@ public class OpenAIInsightService : IAIInsightService
             metrics.HighPriorityOpenIssues,
             metrics.AverageIssueAgeDays,
             metrics.BacklogSize,
+            metrics.TotalSprints,
+            metrics.OverdueIssueCount,
+
+            sprintIssueCount = metrics.SprintIssueCount,
+            dueDateDistribution = metrics.DueDateDistribution,
 
             statusDistribution = metrics.StatusDistribution,
             priorityDistribution = metrics.PriorityDistribution,
             issueTypeDistribution = metrics.IssueTypeDistribution,
+            resolutionDistribution = metrics.ResolutionDistribution,
+
+            teamDistribution = metrics.TeamDistribution,
+            reporterDistribution = metrics.ReporterDistribution,
 
             topAssignees = metrics.AssigneeDistribution
                 .Take(8)
                 .ToDictionary(),
+
+            topContributors = metrics.TopContributors,
 
             topCompletedAssignees = metrics.CompletedWorkPerAssignee
                 .Take(8)
@@ -178,23 +185,33 @@ public class OpenAIInsightService : IAIInsightService
             });
 
         return $$"""
-        Generate sprint report insights using only this aggregated KPI data.
+        Generate a sprint report using only this aggregated KPI data.
 
         Return JSON in this exact structure:
         {
           "executiveSummary": "",
+          "sprintOverview": "",
+          "statusAnalysis": "",
+          "priorityAnalysis": "",
+          "teamWorkloadAnalysis": "",
+          "assigneeProductivitySummary": "",
+          "componentAnalysis": "",
+          "labelAnalysis": "",
+          "resolutionSummary": "",
           "observations": ["", ""],
           "risks": ["", ""],
-          "recommendations": ["", ""]
+          "recommendations": ["", ""],
+          "nextSprintSuggestions": ["", ""]
         }
 
         Rules:
-        - Do not calculate new metrics.
-        - Do not mention raw Excel rows.
-        - Keep each bullet concise.
-        - Focus on stakeholder-ready language.
-        - If data is insufficient, say so clearly.
-        - Return JSON only.
+        - Each narrative string field should be 2-4 concise sentences.
+        - The list fields should each contain 3-5 short, concrete bullets.
+        - Do not calculate new metrics; interpret only what is provided.
+        - Do not mention raw Excel rows or invent data.
+        - Use stakeholder-ready, professional language.
+        - If a section has insufficient data, state that briefly instead of guessing.
+        - Return valid JSON only, with no surrounding text.
 
         Aggregated KPI data:
         {{jsonPayload}}
@@ -300,31 +317,92 @@ public class OpenAIInsightService : IAIInsightService
             ? $"Backlog contains {metrics.BacklogSize} issues and should be reviewed for prioritization."
             : "Backlog volume appears low based on the calculated metrics.";
 
+        var overdueMessage = metrics.OverdueIssueCount > 0
+            ? $"{metrics.OverdueIssueCount} issues are past their due date and need immediate attention."
+            : "No overdue issues were detected against the provided due dates.";
+
+        var topStatus = DescribeTop(metrics.StatusDistribution);
+        var topPriority = DescribeTop(metrics.PriorityDistribution);
+        var topType = DescribeTop(metrics.IssueTypeDistribution);
+        var topTeam = DescribeTop(metrics.TeamDistribution);
+        var topAssignee = DescribeTop(metrics.AssigneeDistribution);
+        var topComponent = DescribeTop(metrics.ComponentDistribution);
+        var topLabel = DescribeTop(metrics.LabelDistribution);
+        var topResolution = DescribeTop(metrics.ResolutionDistribution);
+
         return new AIInsightResult
         {
             ProviderUsed = "Fallback",
             DiagnosticMessage = diagnosticMessage,
 
             ExecutiveSummary =
-                $"The sprint contains {metrics.TotalIssues} issues, with {metrics.CompletedIssues} completed and {metrics.OpenIssues} still open. Completion currently stands at {metrics.CompletionPercentage}%.",
+                $"The sprint contains {metrics.TotalIssues} issues across {metrics.TotalSprints} sprint(s), with {metrics.CompletedIssues} completed and {metrics.OpenIssues} still open. Completion currently stands at {metrics.CompletionPercentage}%.",
+
+            SprintOverview =
+                $"Work is distributed across {metrics.TotalSprints} sprint(s) covering {metrics.TotalIssues} issues in total. {completionMessage}",
+
+            StatusAnalysis =
+                $"The most common status is {topStatus}. Open work totals {metrics.OpenIssues} issues against {metrics.CompletedIssues} completed.",
+
+            PriorityAnalysis =
+                $"The leading priority category is {topPriority}. {riskMessage}",
+
+            TeamWorkloadAnalysis =
+                $"The heaviest team allocation is {topTeam}. Assignee workload is led by {topAssignee}.",
+
+            AssigneeProductivitySummary =
+                $"{topAssignee} carries the most assigned work, while completed-work distribution highlights where delivery is concentrated. Average open issue age is {metrics.AverageIssueAgeDays} days.",
+
+            ComponentAnalysis =
+                $"Issue concentration is highest in component {topComponent}, which may warrant closer ownership and dependency review.",
+
+            LabelAnalysis =
+                $"The most frequent label is {topLabel}, giving a signal of the dominant work themes this sprint.",
+
+            ResolutionSummary =
+                $"The most common resolution outcome is {topResolution}. Issue type distribution is led by {topType}.",
 
             Observations = new List<string>
             {
                 completionMessage,
-                $"Average open issue age is {metrics.AverageIssueAgeDays} days."
+                $"Average open issue age is {metrics.AverageIssueAgeDays} days.",
+                $"Backlog currently holds {metrics.BacklogSize} issues."
             },
 
             Risks = new List<string>
             {
                 riskMessage,
-                backlogMessage
+                backlogMessage,
+                overdueMessage
             },
 
             Recommendations = new List<string>
             {
                 "Review high-priority open items before stakeholder reporting.",
-                "Use assignee and component distributions to identify workload concentration."
+                "Use assignee and component distributions to rebalance workload concentration.",
+                "Triage overdue and aging issues to protect the delivery timeline."
+            },
+
+            NextSprintSuggestions = new List<string>
+            {
+                "Carry over unresolved high-priority items with clear owners.",
+                "Set realistic capacity based on the current completion rate.",
+                "Break down aging issues into smaller, deliverable units."
             }
         };
+    }
+
+    private static string DescribeTop(Dictionary<string, int> distribution)
+    {
+        if (distribution is null || distribution.Count == 0)
+        {
+            return "not available";
+        }
+
+        var top = distribution
+            .OrderByDescending(pair => pair.Value)
+            .First();
+
+        return $"{top.Key} ({top.Value})";
     }
 }

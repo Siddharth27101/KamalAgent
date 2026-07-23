@@ -42,7 +42,7 @@ public class ExcelParserService : IExcelParserService
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var issueKey = GetString(row, headers, "Issue key");
+            var issueKey = GetString(row, headers, "Issue Key", "Key");
 
             if (string.IsNullOrWhiteSpace(issueKey))
             {
@@ -51,9 +51,9 @@ public class ExcelParserService : IExcelParserService
 
             var issueRecord = new IssueRecord
             {
-                IssueType = GetString(row, headers, "Issue Type"),
+                IssueType = GetString(row, headers, "Issue Type", "Type"),
                 IssueKey = issueKey,
-                IssueId = GetLong(row, headers, "Issue id"),
+                IssueId = GetLong(row, headers, "Issue id", "Issue ID", "Id"),
                 Summary = GetString(row, headers, "Summary"),
                 Sprint = GetString(row, headers, "Sprint"),
                 Assignee = GetString(row, headers, "Assignee"),
@@ -62,9 +62,9 @@ public class ExcelParserService : IExcelParserService
                 Priority = GetString(row, headers, "Priority"),
                 Status = GetString(row, headers, "Status"),
                 Resolution = GetString(row, headers, "Resolution"),
-                Created = GetDate(row, headers, "Created"),
-                Updated = GetDate(row, headers, "Updated"),
-                DueDate = GetNullableDate(row, headers, "Due date"),
+                Created = GetDate(row, headers, "Created Date", "Created"),
+                Updated = GetDate(row, headers, "Updated Date", "Updated"),
+                DueDate = GetNullableDate(row, headers, "Due Date", "Due date"),
                 Labels = GetString(row, headers, "Labels"),
                 Components = GetString(row, headers, "Components")
             };
@@ -100,9 +100,9 @@ public class ExcelParserService : IExcelParserService
     private static string GetString(
         IXLRow row,
         Dictionary<string, int> headers,
-        string columnName)
+        params string[] columnNames)
     {
-        if (!TryGetColumnNumber(headers, columnName, out var columnNumber))
+        if (!TryGetColumnNumber(headers, columnNames, out var columnNumber))
         {
             return string.Empty;
         }
@@ -120,9 +120,9 @@ public class ExcelParserService : IExcelParserService
     private static long GetLong(
         IXLRow row,
         Dictionary<string, int> headers,
-        string columnName)
+        params string[] columnNames)
     {
-        if (!TryGetColumnNumber(headers, columnName, out var columnNumber))
+        if (!TryGetColumnNumber(headers, columnNames, out var columnNumber))
         {
             return 0;
         }
@@ -157,17 +157,17 @@ public class ExcelParserService : IExcelParserService
     private static DateTime GetDate(
         IXLRow row,
         Dictionary<string, int> headers,
-        string columnName)
+        params string[] columnNames)
     {
-        return GetNullableDate(row, headers, columnName) ?? default;
+        return GetNullableDate(row, headers, columnNames) ?? default;
     }
 
     private static DateTime? GetNullableDate(
         IXLRow row,
         Dictionary<string, int> headers,
-        string columnName)
+        params string[] columnNames)
     {
-        if (!TryGetColumnNumber(headers, columnName, out var columnNumber))
+        if (!TryGetColumnNumber(headers, columnNames, out var columnNumber))
         {
             return null;
         }
@@ -208,12 +208,21 @@ public class ExcelParserService : IExcelParserService
 
     private static bool TryGetColumnNumber(
         Dictionary<string, int> headers,
-        string columnName,
+        string[] columnNames,
         out int columnNumber)
     {
-        var normalizedColumnName = NormalizeHeader(columnName);
+        foreach (var columnName in columnNames)
+        {
+            var normalizedColumnName = NormalizeHeader(columnName);
 
-        return headers.TryGetValue(normalizedColumnName, out columnNumber);
+            if (headers.TryGetValue(normalizedColumnName, out columnNumber))
+            {
+                return true;
+            }
+        }
+
+        columnNumber = 0;
+        return false;
     }
 
     private static string NormalizeHeader(string value)

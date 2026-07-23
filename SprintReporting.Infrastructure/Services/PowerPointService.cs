@@ -3,7 +3,6 @@ using DocumentFormat.OpenXml.Packaging;
 using A = DocumentFormat.OpenXml.Drawing;
 using P = DocumentFormat.OpenXml.Presentation;
 using SprintReporting.Application.Interfaces;
-using SprintReporting.Domain.Enums;
 using SprintReporting.Domain.Models;
 
 namespace SprintReporting.Infrastructure.Services;
@@ -47,89 +46,21 @@ public class PowerPointService : IPowerPointService
 
             uint slideId = 256;
 
-            AddTitleSlide(
-                presentationPart,
-                slideLayoutPart,
-                slideIdList,
-                slideId++,
-                metrics,
-                aiInsights);
-
-            AddExecutiveSummarySlide(
-                presentationPart,
-                slideLayoutPart,
-                slideIdList,
-                slideId++,
-                aiInsights,
-                metrics);
-
-            if (configuration.SelectedGroups.Contains(ReportGroupType.Delivery))
-            {
-                AddDeliverySlide(
-                    presentationPart,
-                    slideLayoutPart,
-                    slideIdList,
-                    slideId++,
-                    metrics);
-            }
-
-            if (configuration.SelectedGroups.Contains(ReportGroupType.PriorityRisk))
-            {
-                AddPriorityRiskSlide(
-                    presentationPart,
-                    slideLayoutPart,
-                    slideIdList,
-                    slideId++,
-                    metrics,
-                    aiInsights);
-            }
-
-            if (configuration.SelectedGroups.Contains(ReportGroupType.TeamAnalysis))
-            {
-                AddTeamAnalysisSlide(
-                    presentationPart,
-                    slideLayoutPart,
-                    slideIdList,
-                    slideId++,
-                    metrics);
-            }
-
-            if (configuration.SelectedGroups.Contains(ReportGroupType.ComponentAnalysis))
-            {
-                AddComponentAnalysisSlide(
-                    presentationPart,
-                    slideLayoutPart,
-                    slideIdList,
-                    slideId++,
-                    metrics);
-            }
-
-            if (configuration.SelectedGroups.Contains(ReportGroupType.TechnicalDebt))
-            {
-                AddTechnicalDebtSlide(
-                    presentationPart,
-                    slideLayoutPart,
-                    slideIdList,
-                    slideId++,
-                    metrics);
-            }
-
-            if (configuration.SelectedGroups.Contains(ReportGroupType.AgingBacklog))
-            {
-                AddAgingBacklogSlide(
-                    presentationPart,
-                    slideLayoutPart,
-                    slideIdList,
-                    slideId++,
-                    metrics);
-            }
-
-            AddRecommendationsSlide(
-                presentationPart,
-                slideLayoutPart,
-                slideIdList,
-                slideId++,
-                aiInsights);
+            // The 14 required slides are always generated.
+            AddCoverSlide(presentationPart, slideLayoutPart, slideIdList, slideId++, metrics, aiInsights);
+            AddExecutiveSummarySlide(presentationPart, slideLayoutPart, slideIdList, slideId++, aiInsights, metrics);
+            AddSprintOverviewSlide(presentationPart, slideLayoutPart, slideIdList, slideId++, metrics, aiInsights);
+            AddStatusDistributionSlide(presentationPart, slideLayoutPart, slideIdList, slideId++, metrics, aiInsights);
+            AddPriorityAnalysisSlide(presentationPart, slideLayoutPart, slideIdList, slideId++, metrics, aiInsights);
+            AddIssueTypeSlide(presentationPart, slideLayoutPart, slideIdList, slideId++, metrics);
+            AddTeamWorkloadSlide(presentationPart, slideLayoutPart, slideIdList, slideId++, metrics, aiInsights);
+            AddAssigneeAnalysisSlide(presentationPart, slideLayoutPart, slideIdList, slideId++, metrics, aiInsights);
+            AddComponentAnalysisSlide(presentationPart, slideLayoutPart, slideIdList, slideId++, metrics, aiInsights);
+            AddResolutionSummarySlide(presentationPart, slideLayoutPart, slideIdList, slideId++, metrics, aiInsights);
+            AddKeyInsightsSlide(presentationPart, slideLayoutPart, slideIdList, slideId++, metrics, aiInsights);
+            AddRisksObservationsSlide(presentationPart, slideLayoutPart, slideIdList, slideId++, metrics, aiInsights);
+            AddRecommendationsSlide(presentationPart, slideLayoutPart, slideIdList, slideId++, aiInsights);
+            AddConclusionSlide(presentationPart, slideLayoutPart, slideIdList, slideId++, metrics, aiInsights);
 
             presentationPart.Presentation.Save();
         }
@@ -347,7 +278,10 @@ public class PowerPointService : IPowerPointService
         return new SlideContext(slidePart, shapeTree);
     }
 
-    private static void AddTitleSlide(
+    // ---------------------------------------------------------------------
+    // Slide 1: Cover
+    // ---------------------------------------------------------------------
+    private static void AddCoverSlide(
         PresentationPart presentationPart,
         SlideLayoutPart slideLayoutPart,
         P.SlideIdList slideIdList,
@@ -360,126 +294,45 @@ public class PowerPointService : IPowerPointService
             slideLayoutPart,
             slideIdList,
             slideId,
-            "Title Slide");
+            "Cover Slide");
 
         AddBackground(context.ShapeTree, Navy);
 
-        AddRectangle(
-            context.ShapeTree,
-            2U,
-            "Accent Block",
-            0.0,
-            0.0,
-            13.333,
-            0.18,
-            Blue,
-            Blue);
+        AddRectangle(context.ShapeTree, 2U, "Accent Block", 0.0, 0.0, 13.333, 0.18, Blue, Blue);
 
-        AddText(
-            context.ShapeTree,
-            3U,
-            "Title",
-            "Sprint Reporting Agent",
-            0.75,
-            1.0,
-            8.6,
-            0.65,
-            3600,
-            White,
-            true);
+        AddText(context.ShapeTree, 3U, "Title", "Sprint Report",
+            0.75, 1.0, 11.8, 0.75, 4000, White, true);
 
-        AddText(
-            context.ShapeTree,
-            4U,
-            "Subtitle",
-            "Excel to AI-powered stakeholder PowerPoint",
-            0.78,
-            1.75,
-            8.6,
-            0.35,
-            1700,
-            "BFDBFE",
-            false);
+        AddText(context.ShapeTree, 4U, "Subtitle", "AI-generated sprint analysis from Jira issue data",
+            0.78, 1.9, 11.0, 0.4, 1800, "BFDBFE", false);
 
-        AddText(
-            context.ShapeTree,
-            5U,
-            "Generated Date",
-            $"Generated on {DateTime.Now:dd MMM yyyy}",
-            0.78,
-            2.2,
-            5.5,
-            0.3,
-            1300,
-            "CBD5E1",
-            false);
+        AddText(context.ShapeTree, 5U, "Generated Date", $"Generated on {DateTime.Now:dd MMM yyyy}",
+            0.78, 2.4, 6.0, 0.3, 1300, "CBD5E1", false);
 
-        AddMetricCard(
-            context.ShapeTree,
-            6U,
-            "Total Issues",
-            metrics.TotalIssues.ToString(),
-            "Parsed from uploaded Excel",
-            0.78,
-            3.25,
-            2.75,
-            1.25,
-            Blue);
+        AddMetricCard(context.ShapeTree, 6U, "Total Issues", metrics.TotalIssues.ToString(),
+            "Parsed from Excel", 0.78, 3.35, 2.75, 1.25, Blue);
 
-        AddMetricCard(
-            context.ShapeTree,
-            10U,
-            "Completion",
-            $"{metrics.CompletionPercentage}%",
-            "Calculated in C#",
-            3.82,
-            3.25,
-            2.75,
-            1.25,
-            Green);
+        AddMetricCard(context.ShapeTree, 10U, "Sprints", metrics.TotalSprints.ToString(),
+            "Distinct sprints", 3.82, 3.35, 2.75, 1.25, Purple);
 
-        AddMetricCard(
-            context.ShapeTree,
-            14U,
-            "Open Issues",
-            metrics.OpenIssues.ToString(),
-            "Pending delivery items",
-            6.86,
-            3.25,
-            2.75,
-            1.25,
-            Orange);
+        AddMetricCard(context.ShapeTree, 14U, "Completion", $"{metrics.CompletionPercentage}%",
+            "Sprint progress", 6.86, 3.35, 2.75, 1.25, Green);
 
-        AddMetricCard(
-            context.ShapeTree,
-            18U,
-            "AI Provider",
-            aiInsights.ProviderUsed,
-            "Insights generated after KPI aggregation",
-            9.9,
-            3.25,
-            2.75,
-            1.25,
-            Purple);
+        AddMetricCard(context.ShapeTree, 18U, "Open Issues", metrics.OpenIssues.ToString(),
+            "Pending work", 9.9, 3.35, 2.75, 1.25, Orange);
 
-        AddText(
-            context.ShapeTree,
-            22U,
-            "Architecture Note",
+        AddText(context.ShapeTree, 22U, "Architecture Note",
             "Metrics are calculated deterministically in the backend. Only aggregated KPI data is sent to AI.",
-            0.8,
-            5.25,
-            10.8,
-            0.45,
-            1500,
-            "E2E8F0",
-            false);
+            0.8, 5.3, 11.0, 0.45, 1500, "E2E8F0", false);
 
         AddFooter(context.ShapeTree, 23U);
 
         context.SlidePart.Slide.Save();
     }
 
+    // ---------------------------------------------------------------------
+    // Slide 2: Executive Summary
+    // ---------------------------------------------------------------------
     private static void AddExecutiveSummarySlide(
         PresentationPart presentationPart,
         SlideLayoutPart slideLayoutPart,
@@ -489,100 +342,24 @@ public class PowerPointService : IPowerPointService
         SprintMetrics metrics)
     {
         var context = CreateReportSlide(
-            presentationPart,
-            slideLayoutPart,
-            slideIdList,
-            slideId,
+            presentationPart, slideLayoutPart, slideIdList, slideId,
             "Executive Summary",
-            "AI-generated view based on aggregated sprint KPIs");
+            "AI-generated overview based on aggregated sprint KPIs");
 
-        AddText(
-            context.ShapeTree,
-            20U,
-            "Summary Text",
-            aiInsights.ExecutiveSummary,
-            0.75,
-            1.55,
-            7.45,
-            1.9,
-            1900,
-            Navy,
-            false);
+        AddText(context.ShapeTree, 20U, "Summary Text", aiInsights.ExecutiveSummary,
+            0.75, 1.55, 11.8, 2.3, 1800, Navy, false);
 
-        AddKpiStrip(context.ShapeTree, 30U, metrics, 0.75, 4.1);
+        AddKpiStrip(context.ShapeTree, 40U, metrics, 0.75, 4.25);
 
-        AddBulletedPanel(
-            context.ShapeTree,
-            50U,
-            "Key Observations",
-            aiInsights.Observations,
-            8.55,
-            1.55,
-            3.95,
-            2.15,
-            Blue);
-
-        AddBulletedPanel(
-            context.ShapeTree,
-            70U,
-            "Primary Risks",
-            aiInsights.Risks,
-            8.55,
-            4.05,
-            3.95,
-            2.15,
-            Red);
-
-        AddFooter(context.ShapeTree, 90U);
+        AddFooter(context.ShapeTree, 80U);
 
         context.SlidePart.Slide.Save();
     }
 
-    private static void AddDeliverySlide(
-        PresentationPart presentationPart,
-        SlideLayoutPart slideLayoutPart,
-        P.SlideIdList slideIdList,
-        uint slideId,
-        SprintMetrics metrics)
-    {
-        var context = CreateReportSlide(
-            presentationPart,
-            slideLayoutPart,
-            slideIdList,
-            slideId,
-            "Delivery Metrics",
-            "Completion, status distribution, and issue type distribution");
-
-        AddKpiStrip(context.ShapeTree, 20U, metrics, 0.75, 1.35);
-
-        AddDistributionPanel(
-            context.ShapeTree,
-            50U,
-            "Status Distribution",
-            metrics.StatusDistribution,
-            0.75,
-            3.2,
-            5.85,
-            2.9,
-            Blue);
-
-        AddDistributionPanel(
-            context.ShapeTree,
-            80U,
-            "Issue Type Distribution",
-            metrics.IssueTypeDistribution,
-            6.95,
-            3.2,
-            5.55,
-            2.9,
-            Green);
-
-        AddFooter(context.ShapeTree, 110U);
-
-        context.SlidePart.Slide.Save();
-    }
-
-    private static void AddPriorityRiskSlide(
+    // ---------------------------------------------------------------------
+    // Slide 3: Sprint Overview
+    // ---------------------------------------------------------------------
+    private static void AddSprintOverviewSlide(
         PresentationPart presentationPart,
         SlideLayoutPart slideLayoutPart,
         P.SlideIdList slideIdList,
@@ -591,77 +368,111 @@ public class PowerPointService : IPowerPointService
         AIInsightResult aiInsights)
     {
         var context = CreateReportSlide(
-            presentationPart,
-            slideLayoutPart,
-            slideIdList,
-            slideId,
-            "Priority & Risk",
-            "Risk indicators derived from priority, age, and open work");
+            presentationPart, slideLayoutPart, slideIdList, slideId,
+            "Sprint Overview",
+            "Issue volume and sprint-wise distribution");
 
-        AddMetricCard(
-            context.ShapeTree,
-            20U,
-            "High Priority Open",
-            metrics.HighPriorityOpenIssues.ToString(),
-            "High or Highest priority and not Done",
-            0.75,
-            1.35,
-            3.0,
-            1.15,
-            Red);
+        AddMetricCard(context.ShapeTree, 20U, "Total Issues", metrics.TotalIssues.ToString(),
+            "All issues", 0.75, 1.35, 2.85, 1.15, Blue);
 
-        AddMetricCard(
-            context.ShapeTree,
-            24U,
-            "Open Issues",
-            metrics.OpenIssues.ToString(),
-            "All non-Done records",
-            4.05,
-            1.35,
-            3.0,
-            1.15,
-            Orange);
+        AddMetricCard(context.ShapeTree, 24U, "Total Sprints", metrics.TotalSprints.ToString(),
+            "Distinct sprints", 3.72, 1.35, 2.85, 1.15, Purple);
 
-        AddMetricCard(
-            context.ShapeTree,
-            28U,
-            "Avg Open Age",
-            $"{metrics.AverageIssueAgeDays}",
-            "Days since created",
-            7.35,
-            1.35,
-            3.0,
-            1.15,
-            Purple);
+        AddMetricCard(context.ShapeTree, 28U, "Completed", metrics.CompletedIssues.ToString(),
+            "Done issues", 6.69, 1.35, 2.85, 1.15, Green);
 
-        AddDistributionPanel(
-            context.ShapeTree,
-            40U,
-            "Priority Distribution",
-            metrics.PriorityDistribution,
-            0.75,
-            3.0,
-            5.75,
-            3.1,
-            Red);
+        AddMetricCard(context.ShapeTree, 32U, "Open", metrics.OpenIssues.ToString(),
+            "Not done", 9.66, 1.35, 2.85, 1.15, Orange);
 
-        AddBulletedPanel(
-            context.ShapeTree,
-            70U,
-            "Risk Notes",
-            aiInsights.Risks,
-            6.85,
-            3.0,
-            5.65,
-            3.1,
-            Orange);
+        AddDistributionPanel(context.ShapeTree, 50U, "Issues by Sprint", metrics.SprintIssueCount,
+            0.75, 3.0, 6.05, 3.1, Blue, 8);
 
-        AddFooter(context.ShapeTree, 100U);
+        AddInsightBox(context.ShapeTree, 80U, "AI Sprint Overview", aiInsights.SprintOverview,
+            6.95, 3.0, 5.55, 1.5, LightBlue, Blue);
+
+        AddIssueListPanel(context.ShapeTree, 90U, "Recently Created", metrics.RecentlyCreatedIssues,
+            6.95, 4.65, 5.55, 1.45, Green, false);
+
+        AddFooter(context.ShapeTree, 120U);
 
         context.SlidePart.Slide.Save();
     }
 
-    private static void AddTeamAnalysisSlide(
+    // ---------------------------------------------------------------------
+    // Slide 4: Issue Status Distribution
+    // ---------------------------------------------------------------------
+    private static void AddStatusDistributionSlide(
+        PresentationPart presentationPart,
+        SlideLayoutPart slideLayoutPart,
+        P.SlideIdList slideIdList,
+        uint slideId,
+        SprintMetrics metrics,
+        AIInsightResult aiInsights)
+    {
+        var context = CreateReportSlide(
+            presentationPart, slideLayoutPart, slideIdList, slideId,
+            "Issue Status Distribution",
+            "Distribution of issues across workflow statuses");
+
+        AddDistributionPanel(context.ShapeTree, 20U, "Issues by Status", metrics.StatusDistribution,
+            0.75, 1.45, 6.05, 4.6, Blue, 10);
+
+        AddInsightBox(context.ShapeTree, 60U, "Status Analysis", aiInsights.StatusAnalysis,
+            6.95, 1.45, 5.55, 2.15, LightBlue, Blue);
+
+        AddMetricCard(context.ShapeTree, 70U, "Completion", $"{metrics.CompletionPercentage}%",
+            "Sprint progress", 6.95, 3.85, 2.6, 1.1, Green);
+
+        AddMetricCard(context.ShapeTree, 74U, "Open", metrics.OpenIssues.ToString(),
+            "Pending", 9.9, 3.85, 2.6, 1.1, Orange);
+
+        AddText(context.ShapeTree, 80U, "Note",
+            $"{metrics.CompletedIssues} completed of {metrics.TotalIssues} total issues.",
+            6.95, 5.1, 5.55, 0.9, 1400, GrayText, false);
+
+        AddFooter(context.ShapeTree, 90U);
+
+        context.SlidePart.Slide.Save();
+    }
+
+    // ---------------------------------------------------------------------
+    // Slide 5: Priority Analysis
+    // ---------------------------------------------------------------------
+    private static void AddPriorityAnalysisSlide(
+        PresentationPart presentationPart,
+        SlideLayoutPart slideLayoutPart,
+        P.SlideIdList slideIdList,
+        uint slideId,
+        SprintMetrics metrics,
+        AIInsightResult aiInsights)
+    {
+        var context = CreateReportSlide(
+            presentationPart, slideLayoutPart, slideIdList, slideId,
+            "Priority Analysis",
+            "Issue distribution and risk by priority");
+
+        AddDistributionPanel(context.ShapeTree, 20U, "Issues by Priority", metrics.PriorityDistribution,
+            0.75, 1.45, 6.05, 4.6, Red, 10);
+
+        AddInsightBox(context.ShapeTree, 60U, "Priority Analysis", aiInsights.PriorityAnalysis,
+            6.95, 1.45, 5.55, 2.15, LightBlue, Blue);
+
+        AddMetricCard(context.ShapeTree, 70U, "High Priority Open", metrics.HighPriorityOpenIssues.ToString(),
+            "High/Highest and open", 6.95, 3.85, 5.55, 1.1, Red);
+
+        AddText(context.ShapeTree, 80U, "Note",
+            "High-priority open items should be resolved first to protect delivery confidence.",
+            6.95, 5.15, 5.55, 0.9, 1400, GrayText, false);
+
+        AddFooter(context.ShapeTree, 90U);
+
+        context.SlidePart.Slide.Save();
+    }
+
+    // ---------------------------------------------------------------------
+    // Slide 6: Issue Type Distribution
+    // ---------------------------------------------------------------------
+    private static void AddIssueTypeSlide(
         PresentationPart presentationPart,
         SlideLayoutPart slideLayoutPart,
         P.SlideIdList slideIdList,
@@ -669,245 +480,215 @@ public class PowerPointService : IPowerPointService
         SprintMetrics metrics)
     {
         var context = CreateReportSlide(
-            presentationPart,
-            slideLayoutPart,
-            slideIdList,
-            slideId,
-            "Team Analysis",
-            "Workload and completed work distribution by assignee");
+            presentationPart, slideLayoutPart, slideIdList, slideId,
+            "Issue Type Distribution",
+            "Breakdown of issues by type and due-date health");
 
-        AddDistributionPanel(
-            context.ShapeTree,
-            20U,
-            "Issues Per Assignee",
-            metrics.AssigneeDistribution,
-            0.75,
-            1.45,
-            5.85,
-            4.8,
-            Blue,
-            8);
+        AddDistributionPanel(context.ShapeTree, 20U, "Issues by Type", metrics.IssueTypeDistribution,
+            0.75, 1.45, 6.05, 4.6, Green, 10);
 
-        AddDistributionPanel(
-            context.ShapeTree,
-            60U,
-            "Completed Work Per Assignee",
-            metrics.CompletedWorkPerAssignee,
-            6.95,
-            1.45,
-            5.55,
-            4.8,
-            Green,
-            8);
+        AddInsightBox(context.ShapeTree, 60U, "How to Read This",
+            "Issue type distribution highlights the balance between features, bugs, and other work categories this sprint.",
+            6.95, 1.45, 5.55, 2.15, LightBlue, Blue);
+
+        AddDistributionPanel(context.ShapeTree, 70U, "Due Date Buckets", metrics.DueDateDistribution,
+            6.95, 3.85, 5.55, 2.25, Orange, 6);
 
         AddFooter(context.ShapeTree, 100U);
 
         context.SlidePart.Slide.Save();
     }
 
+    // ---------------------------------------------------------------------
+    // Slide 7: Team Workload
+    // ---------------------------------------------------------------------
+    private static void AddTeamWorkloadSlide(
+        PresentationPart presentationPart,
+        SlideLayoutPart slideLayoutPart,
+        P.SlideIdList slideIdList,
+        uint slideId,
+        SprintMetrics metrics,
+        AIInsightResult aiInsights)
+    {
+        var context = CreateReportSlide(
+            presentationPart, slideLayoutPart, slideIdList, slideId,
+            "Team Workload",
+            "Workload distribution across teams and reporters");
+
+        AddDistributionPanel(context.ShapeTree, 20U, "Issues by Team", metrics.TeamDistribution,
+            0.75, 1.45, 6.05, 4.6, Blue, 10);
+
+        AddInsightBox(context.ShapeTree, 60U, "Team Workload Analysis", aiInsights.TeamWorkloadAnalysis,
+            6.95, 1.45, 5.55, 2.15, LightBlue, Blue);
+
+        AddDistributionPanel(context.ShapeTree, 70U, "Issues by Reporter", metrics.ReporterDistribution,
+            6.95, 3.85, 5.55, 2.25, Purple, 6);
+
+        AddFooter(context.ShapeTree, 100U);
+
+        context.SlidePart.Slide.Save();
+    }
+
+    // ---------------------------------------------------------------------
+    // Slide 8: Assignee Analysis
+    // ---------------------------------------------------------------------
+    private static void AddAssigneeAnalysisSlide(
+        PresentationPart presentationPart,
+        SlideLayoutPart slideLayoutPart,
+        P.SlideIdList slideIdList,
+        uint slideId,
+        SprintMetrics metrics,
+        AIInsightResult aiInsights)
+    {
+        var context = CreateReportSlide(
+            presentationPart, slideLayoutPart, slideIdList, slideId,
+            "Assignee Analysis",
+            "Assigned vs completed work by assignee");
+
+        AddDistributionPanel(context.ShapeTree, 20U, "Issues per Assignee", metrics.AssigneeDistribution,
+            0.75, 1.45, 6.05, 4.6, Blue, 10);
+
+        AddDistributionPanel(context.ShapeTree, 60U, "Completed per Assignee", metrics.CompletedWorkPerAssignee,
+            6.95, 1.45, 5.55, 2.15, Green, 6);
+
+        AddInsightBox(context.ShapeTree, 90U, "Assignee Productivity", aiInsights.AssigneeProductivitySummary,
+            6.95, 3.85, 5.55, 2.25, LightBlue, Blue);
+
+        AddFooter(context.ShapeTree, 120U);
+
+        context.SlidePart.Slide.Save();
+    }
+
+    // ---------------------------------------------------------------------
+    // Slide 9: Component Analysis
+    // ---------------------------------------------------------------------
     private static void AddComponentAnalysisSlide(
         PresentationPart presentationPart,
         SlideLayoutPart slideLayoutPart,
         P.SlideIdList slideIdList,
         uint slideId,
-        SprintMetrics metrics)
+        SprintMetrics metrics,
+        AIInsightResult aiInsights)
     {
         var context = CreateReportSlide(
-            presentationPart,
-            slideLayoutPart,
-            slideIdList,
-            slideId,
+            presentationPart, slideLayoutPart, slideIdList, slideId,
             "Component Analysis",
             "Issue concentration by system component");
 
-        AddDistributionPanel(
-            context.ShapeTree,
-            20U,
-            "Component Distribution",
-            metrics.ComponentDistribution,
-            0.75,
-            1.45,
-            6.25,
-            4.8,
-            Purple);
+        AddDistributionPanel(context.ShapeTree, 20U, "Issues by Component", metrics.ComponentDistribution,
+            0.75, 1.45, 6.05, 4.6, Purple, 10);
 
-        AddInsightBox(
-            context.ShapeTree,
-            60U,
-            "How to Read This",
-            "Components with higher issue concentration should be reviewed for ownership, dependencies, or recurring implementation risks.",
-            7.35,
-            1.45,
-            5.15,
-            2.0,
-            LightBlue,
-            Blue);
+        AddInsightBox(context.ShapeTree, 60U, "Component Analysis", aiInsights.ComponentAnalysis,
+            6.95, 1.45, 5.55, 2.15, LightBlue, Blue);
 
-        AddText(
-            context.ShapeTree,
-            70U,
-            "Component Note",
-            "This slide is useful for sprint review discussions because it shows where effort is concentrated without exposing raw ticket rows.",
-            7.35,
-            4.0,
-            5.1,
-            1.2,
-            1500,
-            GrayText,
-            false);
-
-        AddFooter(context.ShapeTree, 100U);
-
-        context.SlidePart.Slide.Save();
-    }
-
-    private static void AddTechnicalDebtSlide(
-        PresentationPart presentationPart,
-        SlideLayoutPart slideLayoutPart,
-        P.SlideIdList slideIdList,
-        uint slideId,
-        SprintMetrics metrics)
-    {
-        var context = CreateReportSlide(
-            presentationPart,
-            slideLayoutPart,
-            slideIdList,
-            slideId,
-            "Technical Debt",
-            "Technical debt indicators derived from issue labels");
-
-        AddMetricCard(
-            context.ShapeTree,
-            20U,
-            "tech-debt",
-            GetDictionaryValue(metrics.LabelDistribution, "tech-debt").ToString(),
-            "Debt-related labels",
-            0.75,
-            1.35,
-            2.75,
-            1.15,
-            Purple);
-
-        AddMetricCard(
-            context.ShapeTree,
-            24U,
-            "performance",
-            GetDictionaryValue(metrics.LabelDistribution, "performance").ToString(),
-            "Performance related work",
-            3.75,
-            1.35,
-            2.75,
-            1.15,
-            Orange);
-
-        AddMetricCard(
-            context.ShapeTree,
-            28U,
-            "hotfix",
-            GetDictionaryValue(metrics.LabelDistribution, "hotfix").ToString(),
-            "Urgent correction work",
-            6.75,
-            1.35,
-            2.75,
-            1.15,
-            Red);
-
-        AddMetricCard(
-            context.ShapeTree,
-            32U,
-            "enhancement",
-            GetDictionaryValue(metrics.LabelDistribution, "enhancement").ToString(),
-            "Improvement work",
-            9.75,
-            1.35,
-            2.75,
-            1.15,
-            Green);
-
-        AddDistributionPanel(
-            context.ShapeTree,
-            50U,
-            "All Label Distribution",
-            metrics.LabelDistribution,
-            0.75,
-            3.1,
-            11.75,
-            3.0,
-            Purple,
-            10);
+        AddText(context.ShapeTree, 70U, "Note",
+            "Components with higher issue concentration may need ownership review or dependency management.",
+            6.95, 3.85, 5.55, 1.2, 1400, GrayText, false);
 
         AddFooter(context.ShapeTree, 90U);
 
         context.SlidePart.Slide.Save();
     }
 
-    private static void AddAgingBacklogSlide(
+    // ---------------------------------------------------------------------
+    // Slide 10: Resolution Summary
+    // ---------------------------------------------------------------------
+    private static void AddResolutionSummarySlide(
         PresentationPart presentationPart,
         SlideLayoutPart slideLayoutPart,
         P.SlideIdList slideIdList,
         uint slideId,
-        SprintMetrics metrics)
+        SprintMetrics metrics,
+        AIInsightResult aiInsights)
     {
         var context = CreateReportSlide(
-            presentationPart,
-            slideLayoutPart,
-            slideIdList,
-            slideId,
-            "Aging & Backlog",
-            "Open issue age and backlog health indicators");
+            presentationPart, slideLayoutPart, slideIdList, slideId,
+            "Resolution Summary",
+            "Resolution outcomes across issues");
 
-        AddMetricCard(
-            context.ShapeTree,
-            20U,
-            "Average Open Age",
-            $"{metrics.AverageIssueAgeDays}",
-            "Days",
-            0.75,
-            1.35,
-            3.25,
-            1.15,
-            Purple);
+        AddDistributionPanel(context.ShapeTree, 20U, "Resolution Distribution", metrics.ResolutionDistribution,
+            0.75, 1.45, 6.05, 4.6, Green, 10);
 
-        AddMetricCard(
-            context.ShapeTree,
-            24U,
-            "Backlog Size",
-            metrics.BacklogSize.ToString(),
-            "Backlog status items",
-            4.35,
-            1.35,
-            3.25,
-            1.15,
-            Orange);
+        AddInsightBox(context.ShapeTree, 60U, "Resolution Summary", aiInsights.ResolutionSummary,
+            6.95, 1.45, 5.55, 2.15, LightBlue, Blue);
 
-        AddMetricCard(
-            context.ShapeTree,
-            28U,
-            "Open Issues",
-            metrics.OpenIssues.ToString(),
-            "Pending work",
-            7.95,
-            1.35,
-            3.25,
-            1.15,
-            Red);
+        AddMetricCard(context.ShapeTree, 70U, "Completed", metrics.CompletedIssues.ToString(),
+            "Resolved / done", 6.95, 3.85, 2.6, 1.1, Green);
 
-        AddOldestIssuesPanel(
-            context.ShapeTree,
-            40U,
-            "Oldest Open Issues",
-            metrics.OldestOpenIssues,
-            0.75,
-            3.05,
-            11.75,
-            3.1,
-            Red);
+        AddMetricCard(context.ShapeTree, 74U, "Open", metrics.OpenIssues.ToString(),
+            "Unresolved", 9.9, 3.85, 2.6, 1.1, Orange);
 
         AddFooter(context.ShapeTree, 90U);
 
         context.SlidePart.Slide.Save();
     }
 
+    // ---------------------------------------------------------------------
+    // Slide 11: Key Insights
+    // ---------------------------------------------------------------------
+    private static void AddKeyInsightsSlide(
+        PresentationPart presentationPart,
+        SlideLayoutPart slideLayoutPart,
+        P.SlideIdList slideIdList,
+        uint slideId,
+        SprintMetrics metrics,
+        AIInsightResult aiInsights)
+    {
+        var context = CreateReportSlide(
+            presentationPart, slideLayoutPart, slideIdList, slideId,
+            "Key Insights",
+            "Notable observations and label themes");
+
+        AddBulletedPanel(context.ShapeTree, 20U, "Key Observations", aiInsights.Observations,
+            0.75, 1.45, 6.05, 4.6, Blue);
+
+        AddDistributionPanel(context.ShapeTree, 60U, "Issues by Label", metrics.LabelDistribution,
+            6.95, 1.45, 5.55, 2.15, Purple, 6);
+
+        AddInsightBox(context.ShapeTree, 90U, "Label Analysis", aiInsights.LabelAnalysis,
+            6.95, 3.85, 5.55, 2.25, LightBlue, Blue);
+
+        AddFooter(context.ShapeTree, 120U);
+
+        context.SlidePart.Slide.Save();
+    }
+
+    // ---------------------------------------------------------------------
+    // Slide 12: Risks & Observations
+    // ---------------------------------------------------------------------
+    private static void AddRisksObservationsSlide(
+        PresentationPart presentationPart,
+        SlideLayoutPart slideLayoutPart,
+        P.SlideIdList slideIdList,
+        uint slideId,
+        SprintMetrics metrics,
+        AIInsightResult aiInsights)
+    {
+        var context = CreateReportSlide(
+            presentationPart, slideLayoutPart, slideIdList, slideId,
+            "Risks & Observations",
+            "Delivery risks, overdue work, and due-date health");
+
+        AddBulletedPanel(context.ShapeTree, 20U, "Potential Risks", aiInsights.Risks,
+            0.75, 1.45, 6.05, 2.35, Red);
+
+        AddBulletedPanel(context.ShapeTree, 60U, "Observations", aiInsights.Observations,
+            0.75, 4.0, 6.05, 2.35, Blue);
+
+        AddDistributionPanel(context.ShapeTree, 100U, "Due Date Distribution", metrics.DueDateDistribution,
+            6.95, 1.45, 5.55, 2.35, Orange, 6);
+
+        AddIssueListPanel(context.ShapeTree, 130U, "Overdue Issues", metrics.OverdueIssues,
+            6.95, 4.0, 5.55, 2.35, Red, true);
+
+        AddFooter(context.ShapeTree, 160U);
+
+        context.SlidePart.Slide.Save();
+    }
+
+    // ---------------------------------------------------------------------
+    // Slide 13: AI Recommendations
+    // ---------------------------------------------------------------------
     private static void AddRecommendationsSlide(
         PresentationPart presentationPart,
         SlideLayoutPart slideLayoutPart,
@@ -916,50 +697,53 @@ public class PowerPointService : IPowerPointService
         AIInsightResult aiInsights)
     {
         var context = CreateReportSlide(
-            presentationPart,
-            slideLayoutPart,
-            slideIdList,
-            slideId,
-            "Recommendations",
-            "AI-generated actions for sprint stakeholders");
+            presentationPart, slideLayoutPart, slideIdList, slideId,
+            "AI Recommendations",
+            "Recommended actions for sprint stakeholders");
 
-        AddBulletedPanel(
-            context.ShapeTree,
-            20U,
-            "Recommended Actions",
-            aiInsights.Recommendations,
-            0.75,
-            1.45,
-            7.0,
-            4.5,
-            Green);
+        AddBulletedPanel(context.ShapeTree, 20U, "Recommended Actions", aiInsights.Recommendations,
+            0.75, 1.45, 7.0, 4.6, Green);
 
-        AddInsightBox(
-            context.ShapeTree,
-            60U,
-            "AI Usage Note",
-            $"Provider used: {aiInsights.ProviderUsed}. The AI receives aggregated metrics only, not the full Excel dataset.",
-            8.1,
-            1.45,
-            4.4,
-            2.0,
-            LightBlue,
-            Blue);
+        AddInsightBox(context.ShapeTree, 60U, "AI Usage Note",
+            $"Provider used: {aiInsights.ProviderUsed}. The AI receives aggregated metrics only, not raw Excel rows.",
+            8.1, 1.45, 4.4, 2.15, LightBlue, Blue);
 
-        AddText(
-            context.ShapeTree,
-            70U,
-            "Final Note",
-            "Use this report as a sprint review starting point. Numeric KPIs are calculated in code, while narrative insights are generated by AI.",
-            8.1,
-            4.05,
-            4.4,
-            1.2,
-            1500,
-            GrayText,
-            false);
+        AddText(context.ShapeTree, 70U, "Final Note",
+            "Use these recommendations as a starting point for sprint planning discussions.",
+            8.1, 3.85, 4.4, 1.2, 1400, GrayText, false);
 
         AddFooter(context.ShapeTree, 90U);
+
+        context.SlidePart.Slide.Save();
+    }
+
+    // ---------------------------------------------------------------------
+    // Slide 14: Conclusion
+    // ---------------------------------------------------------------------
+    private static void AddConclusionSlide(
+        PresentationPart presentationPart,
+        SlideLayoutPart slideLayoutPart,
+        P.SlideIdList slideIdList,
+        uint slideId,
+        SprintMetrics metrics,
+        AIInsightResult aiInsights)
+    {
+        var context = CreateReportSlide(
+            presentationPart, slideLayoutPart, slideIdList, slideId,
+            "Conclusion",
+            "Next steps and closing summary");
+
+        AddBulletedPanel(context.ShapeTree, 20U, "Next Sprint Suggestions", aiInsights.NextSprintSuggestions,
+            0.75, 1.45, 6.05, 4.6, Purple);
+
+        AddIssueListPanel(context.ShapeTree, 60U, "Recently Updated", metrics.RecentlyUpdatedIssues,
+            6.95, 1.45, 5.55, 2.35, Blue, false);
+
+        AddInsightBox(context.ShapeTree, 90U, "Summary",
+            $"{metrics.CompletedIssues} of {metrics.TotalIssues} issues completed ({metrics.CompletionPercentage}%). {metrics.OverdueIssueCount} issue(s) overdue.",
+            6.95, 4.0, 5.55, 2.35, LightBlue, Green);
+
+        AddFooter(context.ShapeTree, 120U);
 
         context.SlidePart.Slide.Save();
     }
@@ -981,42 +765,13 @@ public class PowerPointService : IPowerPointService
 
         AddBackground(context.ShapeTree, White);
 
-        AddRectangle(
-            context.ShapeTree,
-            2U,
-            "Top Accent",
-            0.0,
-            0.0,
-            13.333,
-            0.14,
-            Blue,
-            Blue);
+        AddRectangle(context.ShapeTree, 2U, "Top Accent", 0.0, 0.0, 13.333, 0.14, Blue, Blue);
 
-        AddText(
-            context.ShapeTree,
-            3U,
-            "Slide Title",
-            title,
-            0.72,
-            0.35,
-            7.8,
-            0.45,
-            2800,
-            Navy,
-            true);
+        AddText(context.ShapeTree, 3U, "Slide Title", title,
+            0.72, 0.35, 11.8, 0.45, 2800, Navy, true);
 
-        AddText(
-            context.ShapeTree,
-            4U,
-            "Slide Subtitle",
-            subtitle,
-            0.74,
-            0.86,
-            8.7,
-            0.3,
-            1200,
-            GrayText,
-            false);
+        AddText(context.ShapeTree, 4U, "Slide Subtitle", subtitle,
+            0.74, 0.86, 11.8, 0.3, 1200, GrayText, false);
 
         return context;
     }
@@ -1028,53 +783,17 @@ public class PowerPointService : IPowerPointService
         double x,
         double y)
     {
-        AddMetricCard(
-            shapeTree,
-            startId,
-            "Total",
-            metrics.TotalIssues.ToString(),
-            "Total issues",
-            x,
-            y,
-            2.75,
-            1.15,
-            Blue);
+        AddMetricCard(shapeTree, startId, "Total", metrics.TotalIssues.ToString(),
+            "Total issues", x, y, 2.75, 1.15, Blue);
 
-        AddMetricCard(
-            shapeTree,
-            startId + 4,
-            "Completed",
-            metrics.CompletedIssues.ToString(),
-            "Done issues",
-            x + 3.0,
-            y,
-            2.75,
-            1.15,
-            Green);
+        AddMetricCard(shapeTree, startId + 4, "Completed", metrics.CompletedIssues.ToString(),
+            "Done issues", x + 3.0, y, 2.75, 1.15, Green);
 
-        AddMetricCard(
-            shapeTree,
-            startId + 8,
-            "Open",
-            metrics.OpenIssues.ToString(),
-            "Not Done",
-            x + 6.0,
-            y,
-            2.75,
-            1.15,
-            Orange);
+        AddMetricCard(shapeTree, startId + 8, "Open", metrics.OpenIssues.ToString(),
+            "Not Done", x + 6.0, y, 2.75, 1.15, Orange);
 
-        AddMetricCard(
-            shapeTree,
-            startId + 12,
-            "Completion",
-            $"{metrics.CompletionPercentage}%",
-            "Sprint progress",
-            x + 9.0,
-            y,
-            2.75,
-            1.15,
-            Purple);
+        AddMetricCard(shapeTree, startId + 12, "Completion", $"{metrics.CompletionPercentage}%",
+            "Sprint progress", x + 9.0, y, 2.75, 1.15, Purple);
     }
 
     private static void AddMetricCard(
@@ -1089,53 +808,15 @@ public class PowerPointService : IPowerPointService
         double height,
         string accentColor)
     {
-        AddRectangle(
-            shapeTree,
-            startId,
-            $"{label} Card",
-            x,
-            y,
-            width,
-            height,
-            LightGray,
-            BorderGray);
+        AddRectangle(shapeTree, startId, $"{label} Card", x, y, width, height, LightGray, BorderGray);
 
-        AddRectangle(
-            shapeTree,
-            startId + 1,
-            $"{label} Accent",
-            x,
-            y,
-            0.08,
-            height,
-            accentColor,
-            accentColor);
+        AddRectangle(shapeTree, startId + 1, $"{label} Accent", x, y, 0.08, height, accentColor, accentColor);
 
-        AddText(
-            shapeTree,
-            startId + 2,
-            $"{label} Value",
-            value,
-            x + 0.22,
-            y + 0.18,
-            width - 0.35,
-            0.36,
-            2500,
-            accentColor,
-            true);
+        AddText(shapeTree, startId + 2, $"{label} Value", value,
+            x + 0.22, y + 0.18, width - 0.35, 0.36, 2500, accentColor, true);
 
-        AddText(
-            shapeTree,
-            startId + 3,
-            $"{label} Label",
-            $"{label}\n{caption}",
-            x + 0.22,
-            y + 0.58,
-            width - 0.35,
-            0.42,
-            1000,
-            GrayText,
-            false);
+        AddText(shapeTree, startId + 3, $"{label} Label", $"{label}\n{caption}",
+            x + 0.22, y + 0.58, width - 0.35, 0.42, 1000, GrayText, false);
     }
 
     private static void AddDistributionPanel(
@@ -1150,55 +831,17 @@ public class PowerPointService : IPowerPointService
         string accentColor,
         int take = 8)
     {
-        AddRectangle(
-            shapeTree,
-            startId,
-            $"{title} Panel",
-            x,
-            y,
-            width,
-            height,
-            LightGray,
-            BorderGray);
+        AddRectangle(shapeTree, startId, $"{title} Panel", x, y, width, height, LightGray, BorderGray);
 
-        AddRectangle(
-            shapeTree,
-            startId + 1,
-            $"{title} Header",
-            x,
-            y,
-            width,
-            0.42,
-            accentColor,
-            accentColor);
+        AddRectangle(shapeTree, startId + 1, $"{title} Header", x, y, width, 0.42, accentColor, accentColor);
 
-        AddText(
-            shapeTree,
-            startId + 2,
-            $"{title} Header Text",
-            title,
-            x + 0.22,
-            y + 0.1,
-            width - 0.45,
-            0.25,
-            1300,
-            White,
-            true);
+        AddText(shapeTree, startId + 2, $"{title} Header Text", title,
+            x + 0.22, y + 0.1, width - 0.45, 0.25, 1300, White, true);
 
         var lines = BuildDistributionLines(values, take);
 
-        AddText(
-            shapeTree,
-            startId + 3,
-            $"{title} Body",
-            string.Join("\n", lines),
-            x + 0.28,
-            y + 0.65,
-            width - 0.55,
-            height - 0.85,
-            1300,
-            Navy,
-            false);
+        AddText(shapeTree, startId + 3, $"{title} Body", string.Join("\n", lines),
+            x + 0.28, y + 0.65, width - 0.55, height - 0.85, 1300, Navy, false);
     }
 
     private static void AddBulletedPanel(
@@ -1212,57 +855,19 @@ public class PowerPointService : IPowerPointService
         double height,
         string accentColor)
     {
-        AddRectangle(
-            shapeTree,
-            startId,
-            $"{title} Panel",
-            x,
-            y,
-            width,
-            height,
-            LightGray,
-            BorderGray);
+        AddRectangle(shapeTree, startId, $"{title} Panel", x, y, width, height, LightGray, BorderGray);
 
-        AddRectangle(
-            shapeTree,
-            startId + 1,
-            $"{title} Header",
-            x,
-            y,
-            width,
-            0.42,
-            accentColor,
-            accentColor);
+        AddRectangle(shapeTree, startId + 1, $"{title} Header", x, y, width, 0.42, accentColor, accentColor);
 
-        AddText(
-            shapeTree,
-            startId + 2,
-            $"{title} Header Text",
-            title,
-            x + 0.22,
-            y + 0.1,
-            width - 0.45,
-            0.25,
-            1300,
-            White,
-            true);
+        AddText(shapeTree, startId + 2, $"{title} Header Text", title,
+            x + 0.22, y + 0.1, width - 0.45, 0.25, 1300, White, true);
 
         var text = values.Count == 0
             ? "No insights available."
             : string.Join("\n", values.Select(value => $"• {value}"));
 
-        AddText(
-            shapeTree,
-            startId + 3,
-            $"{title} Body",
-            text,
-            x + 0.28,
-            y + 0.65,
-            width - 0.55,
-            height - 0.85,
-            1250,
-            Navy,
-            false);
+        AddText(shapeTree, startId + 3, $"{title} Body", text,
+            x + 0.28, y + 0.65, width - 0.55, height - 0.85, 1250, Navy, false);
     }
 
     private static void AddInsightBox(
@@ -1277,167 +882,78 @@ public class PowerPointService : IPowerPointService
         string fillColor,
         string accentColor)
     {
-        AddRectangle(
-            shapeTree,
-            startId,
-            $"{title} Box",
-            x,
-            y,
-            width,
-            height,
-            fillColor,
-            accentColor);
+        AddRectangle(shapeTree, startId, $"{title} Box", x, y, width, height, fillColor, accentColor);
 
-        AddText(
-            shapeTree,
-            startId + 1,
-            $"{title} Heading",
-            title,
-            x + 0.25,
-            y + 0.18,
-            width - 0.5,
-            0.28,
-            1400,
-            accentColor,
-            true);
+        AddText(shapeTree, startId + 1, $"{title} Heading", title,
+            x + 0.25, y + 0.18, width - 0.5, 0.28, 1400, accentColor, true);
 
-        AddText(
-            shapeTree,
-            startId + 2,
-            $"{title} Body",
-            body,
-            x + 0.25,
-            y + 0.58,
-            width - 0.5,
-            height - 0.75,
-            1200,
-            Navy,
-            false);
+        AddText(shapeTree, startId + 2, $"{title} Body", body,
+            x + 0.25, y + 0.58, width - 0.5, height - 0.75, 1200, Navy, false);
     }
 
-    private static void AddOldestIssuesPanel(
+    private static void AddIssueListPanel(
         P.ShapeTree shapeTree,
         uint startId,
         string title,
-        List<OldestOpenIssueMetric> issues,
+        List<IssueSummaryMetric> issues,
         double x,
         double y,
         double width,
         double height,
-        string accentColor)
+        string accentColor,
+        bool showOverdue)
     {
-        AddRectangle(
-            shapeTree,
-            startId,
-            $"{title} Panel",
-            x,
-            y,
-            width,
-            height,
-            LightGray,
-            BorderGray);
+        AddRectangle(shapeTree, startId, $"{title} Panel", x, y, width, height, LightGray, BorderGray);
 
-        AddRectangle(
-            shapeTree,
-            startId + 1,
-            $"{title} Header",
-            x,
-            y,
-            width,
-            0.42,
-            accentColor,
-            accentColor);
+        AddRectangle(shapeTree, startId + 1, $"{title} Header", x, y, width, 0.42, accentColor, accentColor);
 
-        AddText(
-            shapeTree,
-            startId + 2,
-            $"{title} Header Text",
-            title,
-            x + 0.22,
-            y + 0.1,
-            width - 0.45,
-            0.25,
-            1300,
-            White,
-            true);
+        AddText(shapeTree, startId + 2, $"{title} Header Text", title,
+            x + 0.22, y + 0.1, width - 0.45, 0.25, 1300, White, true);
 
-        var text = issues.Count == 0
-            ? "No open aging issues available."
-            : string.Join(
+        string text;
+
+        if (issues is null || issues.Count == 0)
+        {
+            text = "No issues to display.";
+        }
+        else
+        {
+            text = string.Join(
                 "\n",
                 issues.Take(5).Select(issue =>
-                    $"{issue.IssueKey}    {issue.Priority}    {issue.Status}    {issue.AgeDays} days"));
+                {
+                    var suffix = showOverdue
+                        ? $"{issue.DaysOverdue ?? 0}d overdue"
+                        : (issue.Date.HasValue ? issue.Date.Value.ToString("dd MMM") : string.Empty);
 
-        AddText(
-            shapeTree,
-            startId + 3,
-            $"{title} Body",
-            text,
-            x + 0.28,
-            y + 0.7,
-            width - 0.55,
-            height - 0.9,
-            1250,
-            Navy,
-            false);
+                    return $"{issue.IssueKey}  {issue.Status}  {suffix}".TrimEnd();
+                }));
+        }
+
+        AddText(shapeTree, startId + 3, $"{title} Body", text,
+            x + 0.28, y + 0.7, width - 0.55, height - 0.9, 1200, Navy, false);
     }
 
     private static void AddFooter(
         P.ShapeTree shapeTree,
         uint id)
     {
-        AddRectangle(
-            shapeTree,
-            id,
-            "Footer Line",
-            0.72,
-            6.95,
-            11.9,
-            0.01,
-            BorderGray,
-            BorderGray);
+        AddRectangle(shapeTree, id, "Footer Line", 0.72, 6.95, 11.9, 0.01, BorderGray, BorderGray);
 
-        AddText(
-            shapeTree,
-            id + 1,
-            "Footer Text",
+        AddText(shapeTree, id + 1, "Footer Text",
             $"AI Sprint Reporting Agent  |  Generated {DateTime.Now:dd MMM yyyy}",
-            0.75,
-            7.05,
-            7.5,
-            0.22,
-            850,
-            GrayText,
-            false);
+            0.75, 7.05, 7.5, 0.22, 850, GrayText, false);
 
-        AddText(
-            shapeTree,
-            id + 2,
-            "Footer Note",
+        AddText(shapeTree, id + 2, "Footer Note",
             "Metrics calculated in C#; AI used only for narrative insights.",
-            8.2,
-            7.05,
-            4.25,
-            0.22,
-            850,
-            GrayText,
-            false);
+            8.2, 7.05, 4.25, 0.22, 850, GrayText, false);
     }
 
     private static void AddBackground(
         P.ShapeTree shapeTree,
         string color)
     {
-        AddRectangle(
-            shapeTree,
-            1000U,
-            "Background",
-            0,
-            0,
-            13.333,
-            7.5,
-            color,
-            color);
+        AddRectangle(shapeTree, 1000U, "Background", 0, 0, 13.333, 7.5, color, color);
     }
 
     private static void AddRectangle(
@@ -1563,7 +1079,7 @@ public class PowerPointService : IPowerPointService
         string color,
         bool bold)
     {
-        var lines = text
+        var lines = (text ?? string.Empty)
             .Replace("\r\n", "\n")
             .Split('\n');
 
@@ -1618,15 +1134,6 @@ public class PowerPointService : IPowerPointService
                 return $"{item.Key}: {item.Value}  {bar}";
             })
             .ToList();
-    }
-
-    private static int GetDictionaryValue(
-        Dictionary<string, int> values,
-        string key)
-    {
-        return values.TryGetValue(key, out var value)
-            ? value
-            : 0;
     }
 
     private static long InchesToEmu(double inches)
