@@ -1,0 +1,17 @@
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Infrastructure\obj\Debug\net10.0\SprintReporting.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Infrastructure\obj\Debug\net10.0\SprintReporting.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Infrastructure\obj\Debug\net10.0\SprintReporting.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Infrastructure\obj\Debug\net10.0\SprintReporting.Infrastructure.AssemblyInfo.cs
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Infrastructure\obj\Debug\net10.0\SprintReporting.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Infrastructure\bin\Debug\net10.0\SprintReporting.Infrastructure.deps.json
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Infrastructure\bin\Debug\net10.0\SprintReporting.Infrastructure.dll
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Infrastructure\bin\Debug\net10.0\SprintReporting.Infrastructure.pdb
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Infrastructure\bin\Debug\net10.0\SprintReporting.Application.dll
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Infrastructure\bin\Debug\net10.0\SprintReporting.Domain.dll
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Infrastructure\bin\Debug\net10.0\SprintReporting.Application.pdb
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Infrastructure\bin\Debug\net10.0\SprintReporting.Domain.pdb
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Infrastructure\obj\Debug\net10.0\SprintRe.0BF4BBDE.Up2Date
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Infrastructure\obj\Debug\net10.0\SprintReporting.Infrastructure.dll
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Infrastructure\obj\Debug\net10.0\refint\SprintReporting.Infrastructure.dll
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Infrastructure\obj\Debug\net10.0\SprintReporting.Infrastructure.pdb
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Infrastructure\obj\Debug\net10.0\ref\SprintReporting.Infrastructure.dll

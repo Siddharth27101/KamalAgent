@@ -1,0 +1,17 @@
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Persistence\bin\Debug\net10.0\SprintReporting.Persistence.deps.json
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Persistence\bin\Debug\net10.0\SprintReporting.Persistence.dll
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Persistence\bin\Debug\net10.0\SprintReporting.Persistence.pdb
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Persistence\bin\Debug\net10.0\SprintReporting.Application.dll
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Persistence\bin\Debug\net10.0\SprintReporting.Domain.dll
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Persistence\bin\Debug\net10.0\SprintReporting.Application.pdb
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Persistence\bin\Debug\net10.0\SprintReporting.Domain.pdb
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Persistence\obj\Debug\net10.0\SprintReporting.Persistence.csproj.AssemblyReference.cache
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Persistence\obj\Debug\net10.0\SprintReporting.Persistence.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Persistence\obj\Debug\net10.0\SprintReporting.Persistence.AssemblyInfoInputs.cache
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Persistence\obj\Debug\net10.0\SprintReporting.Persistence.AssemblyInfo.cs
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Persistence\obj\Debug\net10.0\SprintReporting.Persistence.csproj.CoreCompileInputs.cache
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Persistence\obj\Debug\net10.0\SprintRe.61B6E6BE.Up2Date
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Persistence\obj\Debug\net10.0\SprintReporting.Persistence.dll
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Persistence\obj\Debug\net10.0\refint\SprintReporting.Persistence.dll
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Persistence\obj\Debug\net10.0\SprintReporting.Persistence.pdb
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Persistence\obj\Debug\net10.0\ref\SprintReporting.Persistence.dll

@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="SprintReporting.API/SprintReporting.API.csproj" />
+  <Project Path="SprintReporting.Application/SprintReporting.Application.csproj" />
+  <Project Path="SprintReporting.Domain/SprintReporting.Domain.csproj" />
+  <Project Path="SprintReporting.Infrastructure/SprintReporting.Infrastructure.csproj" />
+  <Project Path="SprintReporting.Persistence/SprintReporting.Persistence.csproj" />
+</Solution>

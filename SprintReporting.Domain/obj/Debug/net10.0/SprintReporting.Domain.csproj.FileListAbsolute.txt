@@ -1,0 +1,11 @@
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Domain\bin\Debug\net10.0\SprintReporting.Domain.deps.json
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Domain\bin\Debug\net10.0\SprintReporting.Domain.dll
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Domain\bin\Debug\net10.0\SprintReporting.Domain.pdb
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Domain\obj\Debug\net10.0\SprintReporting.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Domain\obj\Debug\net10.0\SprintReporting.Domain.AssemblyInfoInputs.cache
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Domain\obj\Debug\net10.0\SprintReporting.Domain.AssemblyInfo.cs
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Domain\obj\Debug\net10.0\SprintReporting.Domain.csproj.CoreCompileInputs.cache
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Domain\obj\Debug\net10.0\SprintReporting.Domain.dll
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Domain\obj\Debug\net10.0\refint\SprintReporting.Domain.dll
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Domain\obj\Debug\net10.0\SprintReporting.Domain.pdb
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Domain\obj\Debug\net10.0\ref\SprintReporting.Domain.dll

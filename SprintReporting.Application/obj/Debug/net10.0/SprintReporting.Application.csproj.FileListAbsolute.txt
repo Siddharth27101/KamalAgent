@@ -1,0 +1,15 @@
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Application\bin\Debug\net10.0\SprintReporting.Application.deps.json
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Application\bin\Debug\net10.0\SprintReporting.Application.dll
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Application\bin\Debug\net10.0\SprintReporting.Application.pdb
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Application\bin\Debug\net10.0\SprintReporting.Domain.dll
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Application\bin\Debug\net10.0\SprintReporting.Domain.pdb
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Application\obj\Debug\net10.0\SprintReporting.Application.csproj.AssemblyReference.cache
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Application\obj\Debug\net10.0\SprintReporting.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Application\obj\Debug\net10.0\SprintReporting.Application.AssemblyInfoInputs.cache
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Application\obj\Debug\net10.0\SprintReporting.Application.AssemblyInfo.cs
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Application\obj\Debug\net10.0\SprintReporting.Application.csproj.CoreCompileInputs.cache
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Application\obj\Debug\net10.0\SprintRe.C1E68CBE.Up2Date
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Application\obj\Debug\net10.0\SprintReporting.Application.dll
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Application\obj\Debug\net10.0\refint\SprintReporting.Application.dll
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Application\obj\Debug\net10.0\SprintReporting.Application.pdb
+C:\Users\v.kamalesh\Desktop\AI-Sprint-Reporting-Agent\SprintReporting.Application\obj\Debug\net10.0\ref\SprintReporting.Application.dll

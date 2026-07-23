@@ -1,0 +1,10 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\SprintReporting.Domain\\Models",
+    "\\SprintReporting.Infrastructure",
+    "\\SprintReporting.Infrastructure\\Services"
+  ],
+  "SelectedNode": "\\SprintReporting.Infrastructure\\Services\\PowerPointService.cs",
+  "PreviewInSolutionExplorer": false
+}

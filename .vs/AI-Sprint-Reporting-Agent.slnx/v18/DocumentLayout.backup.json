@@ -1,0 +1,178 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\v.kamalesh\\Desktop\\AI-Sprint-Reporting-Agent\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\v.kamalesh\\Desktop\\AI-Sprint-Reporting-Agent\\SprintReporting.Application\\Services\\MetricEngineService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SprintReporting.Application\\Services\\MetricEngineService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\v.kamalesh\\Desktop\\AI-Sprint-Reporting-Agent\\SprintReporting.Domain\\Models\\OldestOpenIssueMetric.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SprintReporting.Domain\\Models\\OldestOpenIssueMetric.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\v.kamalesh\\Desktop\\AI-Sprint-Reporting-Agent\\SprintReporting.Application\\DTOs\\GeneratedReportResultDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SprintReporting.Application\\DTOs\\GeneratedReportResultDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\v.kamalesh\\Desktop\\AI-Sprint-Reporting-Agent\\SprintReporting.Application\\DTOs\\GenerateReportRequestDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SprintReporting.Application\\DTOs\\GenerateReportRequestDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\v.kamalesh\\Desktop\\AI-Sprint-Reporting-Agent\\SprintReporting.Application\\Interfaces\\IPowerPointService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SprintReporting.Application\\Interfaces\\IPowerPointService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\v.kamalesh\\Desktop\\AI-Sprint-Reporting-Agent\\SprintReporting.Application\\Interfaces\\IAIInsightService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SprintReporting.Application\\Interfaces\\IAIInsightService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\v.kamalesh\\Desktop\\AI-Sprint-Reporting-Agent\\SprintReporting.Application\\Interfaces\\IReportingGroupDependencyService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SprintReporting.Application\\Interfaces\\IReportingGroupDependencyService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\v.kamalesh\\Desktop\\AI-Sprint-Reporting-Agent\\SprintReporting.Application\\Interfaces\\IMetricEngineService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SprintReporting.Application\\Interfaces\\IMetricEngineService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\v.kamalesh\\Desktop\\AI-Sprint-Reporting-Agent\\SprintReporting.Application\\Interfaces\\IExcelParserService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SprintReporting.Application\\Interfaces\\IExcelParserService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "OldestOpenIssueMetric.cs",
+              "DocumentMoniker": "C:\\Users\\v.kamalesh\\Desktop\\AI-Sprint-Reporting-Agent\\SprintReporting.Domain\\Models\\OldestOpenIssueMetric.cs",
+              "RelativeDocumentMoniker": "SprintReporting.Domain\\Models\\OldestOpenIssueMetric.cs",
+              "ToolTip": "C:\\Users\\v.kamalesh\\Desktop\\AI-Sprint-Reporting-Agent\\SprintReporting.Domain\\Models\\OldestOpenIssueMetric.cs",
+              "RelativeToolTip": "SprintReporting.Domain\\Models\\OldestOpenIssueMetric.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-23T04:38:08.167Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MetricEngineService.cs",
+              "DocumentMoniker": "C:\\Users\\v.kamalesh\\Desktop\\AI-Sprint-Reporting-Agent\\SprintReporting.Application\\Services\\MetricEngineService.cs",
+              "RelativeDocumentMoniker": "SprintReporting.Application\\Services\\MetricEngineService.cs",
+              "ToolTip": "C:\\Users\\v.kamalesh\\Desktop\\AI-Sprint-Reporting-Agent\\SprintReporting.Application\\Services\\MetricEngineService.cs",
+              "RelativeToolTip": "SprintReporting.Application\\Services\\MetricEngineService.cs",
+              "ViewState": "AgIAAKAAAAAAAAAAAAAAALQAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-22T18:30:27.155Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "GeneratedReportResultDto.cs",
+              "DocumentMoniker": "C:\\Users\\v.kamalesh\\Desktop\\AI-Sprint-Reporting-Agent\\SprintReporting.Application\\DTOs\\GeneratedReportResultDto.cs",
+              "RelativeDocumentMoniker": "SprintReporting.Application\\DTOs\\GeneratedReportResultDto.cs",
+              "ToolTip": "C:\\Users\\v.kamalesh\\Desktop\\AI-Sprint-Reporting-Agent\\SprintReporting.Application\\DTOs\\GeneratedReportResultDto.cs",
+              "RelativeToolTip": "SprintReporting.Application\\DTOs\\GeneratedReportResultDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-22T18:12:54.522Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "GenerateReportRequestDto.cs",
+              "DocumentMoniker": "C:\\Users\\v.kamalesh\\Desktop\\AI-Sprint-Reporting-Agent\\SprintReporting.Application\\DTOs\\GenerateReportRequestDto.cs",
+              "RelativeDocumentMoniker": "SprintReporting.Application\\DTOs\\GenerateReportRequestDto.cs",
+              "ToolTip": "C:\\Users\\v.kamalesh\\Desktop\\AI-Sprint-Reporting-Agent\\SprintReporting.Application\\DTOs\\GenerateReportRequestDto.cs",
+              "RelativeToolTip": "SprintReporting.Application\\DTOs\\GenerateReportRequestDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-22T18:12:35.02Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IPowerPointService.cs",
+              "DocumentMoniker": "C:\\Users\\v.kamalesh\\Desktop\\AI-Sprint-Reporting-Agent\\SprintReporting.Application\\Interfaces\\IPowerPointService.cs",
+              "RelativeDocumentMoniker": "SprintReporting.Application\\Interfaces\\IPowerPointService.cs",
+              "ToolTip": "C:\\Users\\v.kamalesh\\Desktop\\AI-Sprint-Reporting-Agent\\SprintReporting.Application\\Interfaces\\IPowerPointService.cs",
+              "RelativeToolTip": "SprintReporting.Application\\Interfaces\\IPowerPointService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-22T18:14:08.577Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "IAIInsightService.cs",
+              "DocumentMoniker": "C:\\Users\\v.kamalesh\\Desktop\\AI-Sprint-Reporting-Agent\\SprintReporting.Application\\Interfaces\\IAIInsightService.cs",
+              "RelativeDocumentMoniker": "SprintReporting.Application\\Interfaces\\IAIInsightService.cs",
+              "ToolTip": "C:\\Users\\v.kamalesh\\Desktop\\AI-Sprint-Reporting-Agent\\SprintReporting.Application\\Interfaces\\IAIInsightService.cs",
+              "RelativeToolTip": "SprintReporting.Application\\Interfaces\\IAIInsightService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-22T18:13:16.673Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "IReportingGroupDependencyService.cs",
+              "DocumentMoniker": "C:\\Users\\v.kamalesh\\Desktop\\AI-Sprint-Reporting-Agent\\SprintReporting.Application\\Interfaces\\IReportingGroupDependencyService.cs",
+              "RelativeDocumentMoniker": "SprintReporting.Application\\Interfaces\\IReportingGroupDependencyService.cs",
+              "ToolTip": "C:\\Users\\v.kamalesh\\Desktop\\AI-Sprint-Reporting-Agent\\SprintReporting.Application\\Interfaces\\IReportingGroupDependencyService.cs",
+              "RelativeToolTip": "SprintReporting.Application\\Interfaces\\IReportingGroupDependencyService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-22T18:14:29.786Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "IMetricEngineService.cs",
+              "DocumentMoniker": "C:\\Users\\v.kamalesh\\Desktop\\AI-Sprint-Reporting-Agent\\SprintReporting.Application\\Interfaces\\IMetricEngineService.cs",
+              "RelativeDocumentMoniker": "SprintReporting.Application\\Interfaces\\IMetricEngineService.cs",
+              "ToolTip": "C:\\Users\\v.kamalesh\\Desktop\\AI-Sprint-Reporting-Agent\\SprintReporting.Application\\Interfaces\\IMetricEngineService.cs",
+              "RelativeToolTip": "SprintReporting.Application\\Interfaces\\IMetricEngineService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-22T18:13:54.439Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "IExcelParserService.cs",
+              "DocumentMoniker": "C:\\Users\\v.kamalesh\\Desktop\\AI-Sprint-Reporting-Agent\\SprintReporting.Application\\Interfaces\\IExcelParserService.cs",
+              "RelativeDocumentMoniker": "SprintReporting.Application\\Interfaces\\IExcelParserService.cs",
+              "ToolTip": "C:\\Users\\v.kamalesh\\Desktop\\AI-Sprint-Reporting-Agent\\SprintReporting.Application\\Interfaces\\IExcelParserService.cs",
+              "RelativeToolTip": "SprintReporting.Application\\Interfaces\\IExcelParserService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-22T18:13:33.648Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
