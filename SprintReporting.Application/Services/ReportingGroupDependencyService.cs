@@ -10,19 +10,22 @@ public class ReportingGroupDependencyService : IReportingGroupDependencyService
         IReadOnlyList<ReportGroupType> selectedGroups,
         bool includeAllGroups = false)
     {
-        // "All" selection: include every report group in its canonical order.
-        if (includeAllGroups)
-        {
-            return new ReportConfiguration
-            {
-                SelectedGroups = Enum.GetValues<ReportGroupType>().ToList()
-            };
-        }
-
         var normalizedGroups = selectedGroups
             .Where(group => Enum.IsDefined(typeof(ReportGroupType), group))
             .Distinct()
             .ToList();
+
+        // "All" selection (via the flag or the All dropdown value) includes
+        // every report group in its canonical order.
+        if (includeAllGroups || normalizedGroups.Contains(ReportGroupType.All))
+        {
+            return new ReportConfiguration
+            {
+                SelectedGroups = Enum.GetValues<ReportGroupType>()
+                    .Where(group => group != ReportGroupType.All)
+                    .ToList()
+            };
+        }
 
         if (normalizedGroups.Count == 0)
         {
