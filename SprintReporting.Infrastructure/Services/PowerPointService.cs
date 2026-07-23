@@ -39,25 +39,11 @@ public class PowerPointService : IPowerPointService
             PresentationDocumentType.Presentation))
         {
             var presentationPart = presentationDocument.AddPresentationPart();
+            presentationPart.Presentation = new P.Presentation();
 
-            presentationPart.Presentation = new P.Presentation
-            {
-                SlideSize = new P.SlideSize
-                {
-                    Cx = 12192000,
-                    Cy = 6858000
-                },
-                NotesSize = new P.NotesSize
-                {
-                    Cx = 6858000,
-                    Cy = 9144000
-                }
-            };
-
-            var slideLayoutPart = CreatePresentationParts(presentationPart);
-
-            var slideIdList = new P.SlideIdList();
-            presentationPart.Presentation.Append(slideIdList);
+            var slideLayoutPart = CreatePresentationParts(
+                presentationPart,
+                out var slideIdList);
 
             uint slideId = 256;
 
@@ -151,35 +137,62 @@ public class PowerPointService : IPowerPointService
         return Task.FromResult(memoryStream.ToArray());
     }
 
-    private static SlideLayoutPart CreatePresentationParts(PresentationPart presentationPart)
+    private static SlideLayoutPart CreatePresentationParts(
+        PresentationPart presentationPart,
+        out P.SlideIdList slideIdList)
     {
+        var presentation = presentationPart.Presentation!;
+
+        // 1. Slide master part.
         var slideMasterPart = presentationPart.AddNewPart<SlideMasterPart>();
         var slideMaster = CreateSlideMaster();
         slideMasterPart.SlideMaster = slideMaster;
 
+        // 2. Theme part attached to the master (required for a valid presentation).
+        var themePart = slideMasterPart.AddNewPart<ThemePart>();
+        themePart.Theme = CreateTheme();
+
+        // 3. Slide layout part, with a back-relationship to its master.
         var slideLayoutPart = slideMasterPart.AddNewPart<SlideLayoutPart>();
-        var slideLayout = CreateSlideLayout();
-        slideLayoutPart.SlideLayout = slideLayout;
+        slideLayoutPart.SlideLayout = CreateSlideLayout();
+        slideLayoutPart.AddPart(slideMasterPart);
 
-        slideMaster.Append(
-            new P.SlideLayoutIdList(
-                new P.SlideLayoutId
-                {
-                    Id = 1U,
-                    RelationshipId = slideMasterPart.GetIdOfPart(slideLayoutPart)
-                }));
+        // Master -> layout id list (layout id must be >= 2147483648).
+        slideMaster.SlideLayoutIdList = new P.SlideLayoutIdList(
+            new P.SlideLayoutId
+            {
+                Id = 2147483649U,
+                RelationshipId = slideMasterPart.GetIdOfPart(slideLayoutPart)
+            });
 
-        slideMaster.Save();
-        slideLayout.Save();
+        slideMasterPart.SlideMaster.Save();
+        slideLayoutPart.SlideLayout.Save();
+        themePart.Theme.Save();
 
-        var slideMasterIdList = new P.SlideMasterIdList(
+        // Assign presentation children through typed properties so the SDK
+        // serializes them in the schema-required order:
+        // sldMasterIdLst -> sldIdLst -> sldSz -> notesSz.
+        presentation.SlideMasterIdList = new P.SlideMasterIdList(
             new P.SlideMasterId
             {
                 Id = 2147483648U,
                 RelationshipId = presentationPart.GetIdOfPart(slideMasterPart)
             });
 
-        presentationPart.Presentation!.Append(slideMasterIdList);
+        slideIdList = new P.SlideIdList();
+        presentation.SlideIdList = slideIdList;
+
+        presentation.SlideSize = new P.SlideSize
+        {
+            Cx = 12192000,
+            Cy = 6858000
+        };
+
+        presentation.NotesSize = new P.NotesSize
+        {
+            Cx = 6858000,
+            Cy = 9144000
+        };
 
         return slideLayoutPart;
     }
@@ -213,6 +226,61 @@ public class PowerPointService : IPowerPointService
         {
             Type = P.SlideLayoutValues.Blank
         };
+    }
+
+    private static A.Theme CreateTheme()
+    {
+        const string themeXml =
+            "<a:theme xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" name=\"Office Theme\">" +
+              "<a:themeElements>" +
+                "<a:clrScheme name=\"Office\">" +
+                  "<a:dk1><a:sysClr val=\"windowText\" lastClr=\"000000\"/></a:dk1>" +
+                  "<a:lt1><a:sysClr val=\"window\" lastClr=\"FFFFFF\"/></a:lt1>" +
+                  "<a:dk2><a:srgbClr val=\"44546A\"/></a:dk2>" +
+                  "<a:lt2><a:srgbClr val=\"E7E6E6\"/></a:lt2>" +
+                  "<a:accent1><a:srgbClr val=\"2563EB\"/></a:accent1>" +
+                  "<a:accent2><a:srgbClr val=\"16A34A\"/></a:accent2>" +
+                  "<a:accent3><a:srgbClr val=\"F97316\"/></a:accent3>" +
+                  "<a:accent4><a:srgbClr val=\"DC2626\"/></a:accent4>" +
+                  "<a:accent5><a:srgbClr val=\"7C3AED\"/></a:accent5>" +
+                  "<a:accent6><a:srgbClr val=\"0F172A\"/></a:accent6>" +
+                  "<a:hlink><a:srgbClr val=\"0563C1\"/></a:hlink>" +
+                  "<a:folHlink><a:srgbClr val=\"954F72\"/></a:folHlink>" +
+                "</a:clrScheme>" +
+                "<a:fontScheme name=\"Office\">" +
+                  "<a:majorFont>" +
+                    "<a:latin typeface=\"Calibri Light\"/><a:ea typeface=\"\"/><a:cs typeface=\"\"/>" +
+                  "</a:majorFont>" +
+                  "<a:minorFont>" +
+                    "<a:latin typeface=\"Calibri\"/><a:ea typeface=\"\"/><a:cs typeface=\"\"/>" +
+                  "</a:minorFont>" +
+                "</a:fontScheme>" +
+                "<a:fmtScheme name=\"Office\">" +
+                  "<a:fillStyleLst>" +
+                    "<a:solidFill><a:schemeClr val=\"phClr\"/></a:solidFill>" +
+                    "<a:solidFill><a:schemeClr val=\"phClr\"/></a:solidFill>" +
+                    "<a:solidFill><a:schemeClr val=\"phClr\"/></a:solidFill>" +
+                  "</a:fillStyleLst>" +
+                  "<a:lnStyleLst>" +
+                    "<a:ln w=\"6350\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"phClr\"/></a:solidFill><a:prstDash val=\"solid\"/></a:ln>" +
+                    "<a:ln w=\"12700\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"phClr\"/></a:solidFill><a:prstDash val=\"solid\"/></a:ln>" +
+                    "<a:ln w=\"19050\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"phClr\"/></a:solidFill><a:prstDash val=\"solid\"/></a:ln>" +
+                  "</a:lnStyleLst>" +
+                  "<a:effectStyleLst>" +
+                    "<a:effectStyle><a:effectLst/></a:effectStyle>" +
+                    "<a:effectStyle><a:effectLst/></a:effectStyle>" +
+                    "<a:effectStyle><a:effectLst/></a:effectStyle>" +
+                  "</a:effectStyleLst>" +
+                  "<a:bgFillStyleLst>" +
+                    "<a:solidFill><a:schemeClr val=\"phClr\"/></a:solidFill>" +
+                    "<a:solidFill><a:schemeClr val=\"phClr\"/></a:solidFill>" +
+                    "<a:solidFill><a:schemeClr val=\"phClr\"/></a:solidFill>" +
+                  "</a:bgFillStyleLst>" +
+                "</a:fmtScheme>" +
+              "</a:themeElements>" +
+            "</a:theme>";
+
+        return new A.Theme(themeXml);
     }
 
     private static P.CommonSlideData CreateCommonSlideData(string name)
@@ -1501,18 +1569,24 @@ public class PowerPointService : IPowerPointService
 
         foreach (var line in lines)
         {
+            var runProperties = new A.RunProperties
+            {
+                FontSize = fontSize,
+                Bold = bold
+            };
+
+            // Font color must live INSIDE the run properties (a:rPr),
+            // not as a direct child of the run (a:r).
+            runProperties.Append(
+                new A.SolidFill(
+                    new A.RgbColorModelHex
+                    {
+                        Val = color
+                    }));
+
             yield return new A.Paragraph(
                 new A.Run(
-                    new A.RunProperties
-                    {
-                        FontSize = fontSize,
-                        Bold = bold
-                    },
-                    new A.SolidFill(
-                        new A.RgbColorModelHex
-                        {
-                            Val = color
-                        }),
+                    runProperties,
                     new A.Text(line)));
         }
     }
