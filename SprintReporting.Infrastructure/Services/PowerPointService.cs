@@ -1119,20 +1119,9 @@ public class PowerPointService : IPowerPointService
             };
         }
 
-        var maxValue = values.Values.Max();
-
         return values
             .Take(take)
-            .Select(item =>
-            {
-                var barLength = maxValue == 0
-                    ? 0
-                    : Math.Max(1, (int)Math.Round((double)item.Value / maxValue * 14));
-
-                var bar = new string('█', barLength);
-
-                return $"{item.Key}: {item.Value}  {bar}";
-            })
+            .Select(item => $"{item.Key}:  {item.Value}")
             .ToList();
     }
 
