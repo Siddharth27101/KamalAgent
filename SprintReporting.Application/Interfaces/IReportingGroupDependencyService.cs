@@ -6,5 +6,6 @@ namespace SprintReporting.Application.Interfaces;
 public interface IReportingGroupDependencyService
 {
     ReportConfiguration BuildConfiguration(
-        IReadOnlyList<ReportGroupType> selectedGroups);
+        IReadOnlyList<ReportGroupType> selectedGroups,
+        bool includeAllGroups = false);
 }

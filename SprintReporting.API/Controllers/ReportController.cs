@@ -54,7 +54,8 @@ public class ReportsController : ControllerBase
         }
 
         var configuration = _reportingGroupDependencyService.BuildConfiguration(
-            request.SelectedGroups ?? new List<ReportGroupType>());
+            request.SelectedGroups ?? new List<ReportGroupType>(),
+            request.IncludeAllGroups);
 
         var metrics = _metricEngineService.CalculateMetrics(
             issues,
@@ -94,7 +95,8 @@ public class ReportsController : ControllerBase
         }
 
         var configuration = _reportingGroupDependencyService.BuildConfiguration(
-            request.SelectedGroups ?? new List<ReportGroupType>());
+            request.SelectedGroups ?? new List<ReportGroupType>(),
+            request.IncludeAllGroups);
 
         var metrics = _metricEngineService.CalculateMetrics(
             issues,
@@ -141,7 +143,8 @@ public class ReportsController : ControllerBase
         }
 
         var configuration = _reportingGroupDependencyService.BuildConfiguration(
-            request.SelectedGroups ?? new List<ReportGroupType>());
+            request.SelectedGroups ?? new List<ReportGroupType>(),
+            request.IncludeAllGroups);
 
         var metrics = _metricEngineService.CalculateMetrics(
             issues,
